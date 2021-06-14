@@ -298,33 +298,6 @@ class MatrizDispersa():
                         print("Aqui se uniran el resto de nodos")
                     temporalDerecha=temporalDerecha.siguiente
             temporalFilas=temporalFilas.abajo
-        """
-        temporalColumnas=self.raiz
-        temporalFilas=self.raiz
-        if(self.raiz.abajo is None and self.raiz.siguiente is None):
-                print("Solo Existe el Nodo Raiz y Ya fue Graficado")
-        else:
-            while temporalColumnas != None:
-                temporalAbajo=temporalColumnas
-                if(temporalAbajo.abajo is None and temporalAbajo.siguiente is None):
-                    print("--------- Nodo Raiz -----------------")
-                else: 
-                    while temporalAbajo != None:
-                        if(temporalAbajo.abajo is None):
-                            print("No hay nodos hacia abajo en esa Columna para Unir")
-                        else:
-                            if(temporalAbajo.color == ("X="+str(temporalAbajo.x))):
-                                #file.write("AquiEntroSupestamentePara unir Cabeza x hacia primero abajo \n")
-                                file.write(unionNodo("x"+str(temporalColumnas.x),(""+str(temporalAbajo.abajo.x)+","+str(temporalAbajo.abajo.y)+"")))
-                                file.write(unionNodo((""+str(temporalAbajo.abajo.x)+","+str(temporalAbajo.abajo.y)+""),"x"+str(temporalColumnas.x)))
-                            else:
-                                print("aqui van los otros")
-                                #file.write("AquiEntroSupestamentePara unir todos los nodos hacia abajo \n")
-                                #file.write(unionNodo(("("+str(temporalAbajo.x)+","+str(temporalAbajo.y)+")"),("("+str(temporalAbajo.abajo.x)+","+str(temporalAbajo.abajo.y)+")")))
-                                #file.write(unionNodo(("("+str(temporalAbajo.abajo.x)+","+str(temporalAbajo.abajo.y)+")"),("("+str(temporalAbajo.x)+","+str(temporalAbajo.y)+")")))
-                        temporalAbajo=temporalAbajo.abajo
-                temporalColumnas = temporalColumnas.siguiente
-            """
         file.write("}")
         file.close()
         os.system('dot -Tpng grafo2.dot -o grafo2.png') 
