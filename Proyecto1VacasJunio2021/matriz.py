@@ -170,8 +170,8 @@ class MatrizDispersa():
                 temporalColumnas = temporalColumnas.siguiente
                     #ContadorColumnas=ContadorColumnas+1
             # --------------------- Imprmir Cabezeras en Y -------------------------------------------------------
-            while temporalColumnas != None:
-                if(temporalColumnas.color == "Raiz"):
+            while temporalFilas != None:
+                if(temporalFilas.color == "Raiz"):
                     file.write(crearNodo("raiz",("("+str(self.raiz.x)+","+str(self.raiz.y)+") \n"+self.raiz.color),"box"))
                 else: 
                     file.write(crearNodo("y"+str(temporalFilas.y),("("+str(temporalFilas.x)+","+str(temporalFilas.y)+") \n"+temporalFilas.color),"box"))
@@ -188,10 +188,10 @@ class MatrizDispersa():
             else:
                 while temporalColumnas != None:
                     if(temporalColumnas.color == "Raiz"):
-                        file.write("rank=same{")
+                        file.write("rank=same{ \n")
                         file.write(unionNodo("raiz","x"+str(temporalColumnas.siguiente.x)))
                         file.write(unionNodo("x"+str(temporalColumnas.siguiente.x),"raiz"))
-                        file.write("}")
+                        file.write("} \n")
                     else:
                         if(temporalColumnas.siguiente is None):
                             print("No hay mas Nodos Cabezera en X por crear")
@@ -213,6 +213,118 @@ class MatrizDispersa():
                             file.write(unionNodo("y"+str(temporalFilas.y),"y"+str(temporalFilas.abajo.y)))
                             file.write(unionNodo("y"+str(temporalFilas.abajo.y),"y"+str(temporalFilas.y)))
                     temporalFilas=temporalFilas.abajo
+        file.write("/* Hasta Aqui estan creados y Unidos los Nodos Cabezera */ \n")
+
+        # ---------------------------- Se prodede a Crear los Nodos Interiores de la Matriz ----------------------------------------
+        temporalFilas = self.raiz
+        temporalColumnas=self.raiz
+
+        while temporalColumnas != None:
+            if(temporalColumnas.color=="Raiz"):
+                print("Estoy en el Nodo Raiz iniciare a Moverme a la Derecha")
+            else:
+                temporalAbajo=temporalColumnas
+                while temporalAbajo != None:
+                    if(temporalAbajo.abajo is None):
+                        print("No ha mas Nodos hacia abajo de "+temporalColumnas.color+" Por Crear")
+                    if(temporalAbajo.color == ("X="+str(temporalAbajo.x))):
+                        print("Este Nodo ya fue Creado xq es Cabecera")
+                    else:
+                        file.write(crearNodo(("Nodo"+str(temporalAbajo.x)+""+str(temporalAbajo.y)+""),("("+str(temporalAbajo.x)+","+str(temporalAbajo.y)+")\n"+temporalAbajo.color),"box"))
+                    temporalAbajo=temporalAbajo.abajo
+            temporalColumnas=temporalColumnas.siguiente
+        # -------------------------------- Se proceden a unir los Nodos en forma Vertical -----------------------------------------
+        temporalFilas = self.raiz
+        temporalColumnas=self.raiz
+
+        while temporalColumnas != None:
+            if(temporalColumnas.color=="Raiz"):
+                print("Estoy en el Nodo Raiz iniciare a Moverme a la Derecha")
+            else:
+                temporalAbajo=temporalColumnas
+                while temporalAbajo != None:
+                    if(temporalAbajo.abajo is None):
+                        print("No ha mas Nodos hacia abajo de "+temporalColumnas.color+" Por uninr")
+                    if(temporalAbajo.color == ("X="+str(temporalAbajo.x))):
+                        file.write(unionNodo(("x"+str(temporalAbajo.x)),("Nodo"+str(temporalAbajo.abajo.x)+""+str(temporalAbajo.abajo.y)+"")))
+                        file.write(unionNodo(("Nodo"+str(temporalAbajo.abajo.x)+""+str(temporalAbajo.abajo.y)+""),("x"+str(temporalAbajo.x))))
+                        #file.write(unionNodo(("y"+str(temporalAbajo.x)),("Nodo"+str(temporalAbajo.abajo.x)+""+str(temporalAbajo.abajo.y)+""))
+                        print("Este Nodo ya fue  xq es Cabecera")
+                    else:
+                        if(temporalAbajo.abajo is None):
+                            print("No ha mas Nodos hacia abajo de "+temporalColumnas.color+" Por uninr") 
+                        else:
+                            file.write(unionNodo(("Nodo"+str(temporalAbajo.abajo.x)+""+str(temporalAbajo.abajo.y)),("Nodo"+str(temporalAbajo.x)+""+str(temporalAbajo.y))))
+                            file.write(unionNodo(("Nodo"+str(temporalAbajo.x)+""+str(temporalAbajo.y)),("Nodo"+str(temporalAbajo.abajo.x)+""+str(temporalAbajo.abajo.y))))
+                        
+                        #file.write(crearNodo(("Nodo"+str(temporalAbajo.x)+""+str(temporalAbajo.y)+""),("("+str(temporalAbajo.x)+","+str(temporalAbajo.y)+")\n"+temporalAbajo.color),"box"))
+                        print("Aqui se uniran el resto de nodos")
+                    temporalAbajo=temporalAbajo.abajo
+            temporalColumnas=temporalColumnas.siguiente
+        # --------------------------- Se procede a hacer las uniones de forma Horizontal ------------------------------------------------
+        temporalFilas = self.raiz
+        temporalColumnas=self.raiz
+
+        while temporalFilas != None:
+            if(temporalFilas.color=="Raiz"):
+                print("Estoy en el Nodo Raiz iniciare a Moverme a Abajo")
+            else:
+                temporalDerecha=temporalFilas
+                while temporalDerecha != None:
+                    if(temporalDerecha.siguiente is None):
+                        print("No ha mas Nodos hacia derecha de "+temporalDerecha.color+" Por uninr")
+                    if(temporalDerecha.color == ("Y="+str(temporalDerecha.y))):
+                        file.write("rank=same{ \n")
+                        file.write(unionNodo(("y"+str(temporalDerecha.y)),("Nodo"+str(temporalDerecha.siguiente.x)+""+str(temporalDerecha.siguiente.y)+"")))
+                        file.write(unionNodo(("Nodo"+str(temporalDerecha.siguiente.x)+""+str(temporalDerecha.siguiente.y)+""),("y"+str(temporalDerecha.y))))
+                        file.write("} \n")
+                        #file.write(unionNodo(("y"+str(temporalAbajo.x)),("Nodo"+str(temporalAbajo.abajo.x)+""+str(temporalAbajo.abajo.y)+""))
+                        print("Este Nodo ya fue unido con Cabecera en Y")
+                    else:
+                        if(temporalDerecha.siguiente is None):
+                            print("No ha mas Nodos hacia Derecha de "+temporalFilas.color+" Por uninr") 
+                        else:
+                            nodoA=("Nodo"+str(temporalDerecha.siguiente.x)+""+str(temporalDerecha.siguiente.y))
+                            nodoB=("Nodo"+str(temporalDerecha.x)+""+str(temporalDerecha.y))
+                            file.write("rank=same{ \n")
+                            file.write(unionNodo(nodoA,nodoB))
+                            file.write(unionNodo(nodoB,nodoA))
+                            file.write("} \n")
+
+                            #file.write(unionNodo(("Nodo"+str(temporalDerecha.siguiente.x)+""+str(temporalDerecha.siguiente.y)),("Nodo"+str(temporalDerecha.x)+""+str(temporalDerecha.y))))
+                            #file.write(unionNodo(("Nodo"+str(temporalDerecha.x)+""+str(temporalDerecha.y)),("Nodo"+str(temporalDerecha.siguiente.x)+""+str(temporalDerecha.siguiente.y))))
+                        
+                        #file.write(crearNodo(("Nodo"+str(temporalAbajo.x)+""+str(temporalAbajo.y)+""),("("+str(temporalAbajo.x)+","+str(temporalAbajo.y)+")\n"+temporalAbajo.color),"box"))
+                        print("Aqui se uniran el resto de nodos")
+                    temporalDerecha=temporalDerecha.siguiente
+            temporalFilas=temporalFilas.abajo
+        """
+        temporalColumnas=self.raiz
+        temporalFilas=self.raiz
+        if(self.raiz.abajo is None and self.raiz.siguiente is None):
+                print("Solo Existe el Nodo Raiz y Ya fue Graficado")
+        else:
+            while temporalColumnas != None:
+                temporalAbajo=temporalColumnas
+                if(temporalAbajo.abajo is None and temporalAbajo.siguiente is None):
+                    print("--------- Nodo Raiz -----------------")
+                else: 
+                    while temporalAbajo != None:
+                        if(temporalAbajo.abajo is None):
+                            print("No hay nodos hacia abajo en esa Columna para Unir")
+                        else:
+                            if(temporalAbajo.color == ("X="+str(temporalAbajo.x))):
+                                #file.write("AquiEntroSupestamentePara unir Cabeza x hacia primero abajo \n")
+                                file.write(unionNodo("x"+str(temporalColumnas.x),(""+str(temporalAbajo.abajo.x)+","+str(temporalAbajo.abajo.y)+"")))
+                                file.write(unionNodo((""+str(temporalAbajo.abajo.x)+","+str(temporalAbajo.abajo.y)+""),"x"+str(temporalColumnas.x)))
+                            else:
+                                print("aqui van los otros")
+                                #file.write("AquiEntroSupestamentePara unir todos los nodos hacia abajo \n")
+                                #file.write(unionNodo(("("+str(temporalAbajo.x)+","+str(temporalAbajo.y)+")"),("("+str(temporalAbajo.abajo.x)+","+str(temporalAbajo.abajo.y)+")")))
+                                #file.write(unionNodo(("("+str(temporalAbajo.abajo.x)+","+str(temporalAbajo.abajo.y)+")"),("("+str(temporalAbajo.x)+","+str(temporalAbajo.y)+")")))
+                        temporalAbajo=temporalAbajo.abajo
+                temporalColumnas = temporalColumnas.siguiente
+            """
         file.write("}")
         file.close()
         os.system('dot -Tpng grafo2.dot -o grafo2.png') 
