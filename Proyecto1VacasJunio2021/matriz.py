@@ -153,49 +153,66 @@ class MatrizDispersa():
         file.write("digraph G{\n")
         temporalFilas = self.raiz
         temporalColumnas=self.raiz
+        banderaRaiz = False
         if(self.raiz.abajo is None and self.raiz.siguiente is None):
             file.write(crearNodo("raiz",("("+str(self.raiz.x)+","+str(self.raiz.y)+") \n"+self.raiz.color),"box"))
         else:
             #Imprmir Cabezeras:
             # ------------------- Imprimir Cabeceras en X -------------------------------------------------------
             while temporalColumnas != None:
-                file.write(crearNodo(str(temporalColumnas.x),("("+str(temporalColumnas.x)+","+str(temporalColumnas.y)+") \n"+temporalColumnas.color),"box"))
-                print("("+str(temporalColumnas.x)+","+str(temporalColumnas.y)+")\n"+temporalColumnas.color)
-                print("----------------")
+                if(temporalColumnas.color == "Raiz"):
+                   file.write(crearNodo("raiz",("("+str(self.raiz.x)+","+str(self.raiz.y)+") \n"+self.raiz.color),"box"))
+                   #banderaRaiz=true
+                else:
+                    file.write(crearNodo("x"+str(temporalColumnas.x),("("+str(temporalColumnas.x)+","+str(temporalColumnas.y)+") \n"+temporalColumnas.color),"box"))
+                    print("("+str(temporalColumnas.x)+","+str(temporalColumnas.y)+")\n"+temporalColumnas.color)
+                    print("----------------")
                 temporalColumnas = temporalColumnas.siguiente
-                ContadorColumnas=ContadorColumnas+1
+                    #ContadorColumnas=ContadorColumnas+1
             # --------------------- Imprmir Cabezeras en Y -------------------------------------------------------
             while temporalColumnas != None:
-                file.write(crearNodo(str(temporalFilas.y),("("+str(temporalFilas.x)+","+str(temporalFilas.y)+") \n"+temporalFilas.color),"box"))
-                print("("+str(temporalFilas.x)+","+str(temporalFilas.y)+")\n"+temporalFilas.color)
-                print("----------------")
+                if(temporalColumnas.color == "Raiz"):
+                    file.write(crearNodo("raiz",("("+str(self.raiz.x)+","+str(self.raiz.y)+") \n"+self.raiz.color),"box"))
+                else: 
+                    file.write(crearNodo("y"+str(temporalFilas.y),("("+str(temporalFilas.x)+","+str(temporalFilas.y)+") \n"+temporalFilas.color),"box"))
+                    print("("+str(temporalFilas.x)+","+str(temporalFilas.y)+")\n"+temporalFilas.color)
+                    print("----------------")
                 temporalFilas = temporalFilas.abajo
-                contadorFilas=contadorFilas+1
+                #contadorFilas=contadorFilas+1
         
         #---------------- A partir de Aqui Uniremos los Nodos Cabezera -----------------------------------------
-
-            if(ContadorColumnas==0 and contadorFilas == 0):
+            temporalColumnas=self.raiz
+            temporalFilas=self.raiz
+            if(self.raiz.abajo is None and self.raiz.siguiente is None):
                 print("Solo Existe el Nodo Raiz y Ya fue Graficado")
             else:
                 while temporalColumnas != None:
-                    if(ContadorColumnas==1):
-                        file.write(unionNodo("raiz",str(temporalColumnas.x)))
-                        file.write(unionNodo(str(temporalColumnas.x),"raiz"))
+                    if(temporalColumnas.color == "Raiz"):
+                        file.write("rank=same{")
+                        file.write(unionNodo("raiz","x"+str(temporalColumnas.siguiente.x)))
+                        file.write(unionNodo("x"+str(temporalColumnas.siguiente.x),"raiz"))
+                        file.write("}")
                     else:
-                        file.write(unionNodo(str(temporalColumnas.x),str(temporalColumnas.siguiente.x)))
-                        file.write(unionNodo(str(temporalColumnas.siguiente.x),str(temporalColumnas.x)))
-                    temporalColumnas=temporalColumnas.siguiente
-                if(self.raiz.abajo is None):
-                    print("Aun no hay Cabezeras Y")
-                else:
-                    while temporalFilas != None:
-                        if(contadorFilas==1):
-                            file.write(unionNodo("raiz",str(temporalFilas.y)))
-                            file.write(unionNodo(str(temporalFilas.y),"raiz"))
+                        if(temporalColumnas.siguiente is None):
+                            print("No hay mas Nodos Cabezera en X por crear")
                         else:
-                            file.write(unionNodo(str(temporalFilas.y),str(temporalFilas.abajo.y)))
-                            file.write(unionNodo(str(temporalFilas.abajo.y),str(temporalFilas.y)))
-                        temporalFilas=temporalFilas.abajo
+                            file.write("rank=same{ \n")
+                            file.write(unionNodo("x"+str(temporalColumnas.x),"x"+str(temporalColumnas.siguiente.x)))
+                            file.write(unionNodo("x"+str(temporalColumnas.siguiente.x),"x"+str(temporalColumnas.x)))
+                            file.write("} \n")
+                    temporalColumnas=temporalColumnas.siguiente
+
+                while temporalFilas != None:
+                    if(temporalFilas.color=="Raiz"):
+                        file.write(unionNodo("raiz","y"+str(temporalFilas.abajo.y)))
+                        file.write(unionNodo("y"+str(temporalFilas.abajo.y),"raiz"))
+                    else:
+                        if(temporalFilas.abajo is None):
+                            print("No hay Mas Nodos Cabezera en Y por Crear")
+                        else:
+                            file.write(unionNodo("y"+str(temporalFilas.y),"y"+str(temporalFilas.abajo.y)))
+                            file.write(unionNodo("y"+str(temporalFilas.abajo.y),"y"+str(temporalFilas.y)))
+                    temporalFilas=temporalFilas.abajo
         file.write("}")
         file.close()
         os.system('dot -Tpng grafo2.dot -o grafo2.png') 
