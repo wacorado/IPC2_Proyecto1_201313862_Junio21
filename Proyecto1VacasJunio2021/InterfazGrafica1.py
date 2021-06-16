@@ -1,4 +1,5 @@
 from tkinter import *
+import random
 from tkinter import messagebox as MessageBox
 from matriz import MatrizDispersa
 
@@ -10,6 +11,50 @@ infBtnlista=[]
 valorY=""
 valorX=""
 colorJ1=""
+randomPiezaJ1=0
+pathImg=""
+piezaJ1=0
+
+def randomPiezaJ1Img():
+    global randomPiezaJ1,piezaJ1
+    randomPiezaJ1=random.randint(1,6)
+    if(randomPiezaJ1==1):
+        piezaJ1=randomPiezaJ1
+        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza1.gif")
+        imgPequeña=pathImg.subsample(2)
+        limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
+        limgPieza.refresh()
+    elif(randomPiezaJ1==2):
+        piezaJ1=randomPiezaJ1
+        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza2.gif")
+        imgPequeña=pathImg.subsample(2)
+        limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
+        limgPieza.refresh()
+    elif(randomPiezaJ1==3):
+        piezaJ1=randomPiezaJ1
+        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza3.gif")
+        imgPequeña=pathImg.subsample(2)
+        limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
+        limgPieza.refresh()
+    elif(randomPiezaJ1==4):
+        piezaJ1=randomPiezaJ1
+        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza4.gif")
+        imgPequeña=pathImg.subsample(2)
+        limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
+        limgPieza.refresh()
+    elif(randomPiezaJ1==5):
+        piezaJ1=randomPiezaJ1
+        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza5.gif")
+        imgPequeña=pathImg.subsample(2)
+        limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
+        limgPieza.refresh()
+    elif(randomPiezaJ1==6):
+        piezaJ1=randomPiezaJ1
+        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza6.gif")
+        imgPequeña=pathImg.subsample(2)
+        limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
+        limgPieza.refresh()
+
 
 #Metodos para botones y programas 
 def capDimensiones():
@@ -20,6 +65,7 @@ def capDimensiones():
     #Creare la Matriz de Botones
     nfil = 1/int(valorY)
     ncol= 1/int(valorX)
+
     for y in range(int(valorX)):
         matrizBotones.append([])
         for x in range(int(valorY)):
@@ -35,6 +81,8 @@ def capDimensiones():
         print(infBtnlista[y])
         print("-------------")
     print("Tamaño Matriz: "+str(len(matrizBotones)))
+    randomPiezaJ1Img()
+    
 
 def pintarJ1():
     global valorX, valorY, colorJ1
@@ -43,6 +91,7 @@ def pintarJ1():
     posX=(int(txtColumnasJ1.get())-1)
     posY=(int(txtFilasJ1.get())-1)
     colorJ1=txtColorJ1.get()
+    
     if (tamañoMatriz <= 0):
         MessageBox.showinfo("Error Tablero","Tablero no ha sido creado no se puede jugar")
     else:
@@ -68,7 +117,8 @@ def pintarJ1():
             matriz.insertarElemento(int(posX+1),int(posY+1),colorJ1)
             matriz.generarGrafo()
         else:
-            MessageBox.showinfo("Error Casilla","Casilla No Valida ya fue Ocupada") 
+            MessageBox.showinfo("Error Casilla","Casilla No Valida ya fue Ocupada")
+    randomPiezaJ1Img() 
 
     #for y in range(int(valorY)):
         #infBtnlista.append([])
@@ -113,7 +163,7 @@ btnCrearMatriz.config(bg="#34495E", fg="white", borderwidth=1)
 tablero = Frame(ventana1)
 tablero.config(bg = "#900C3F")
 tablero.place(relx=0.003, rely=0.13, relwidth= 0.75, relheight= 0.75)
-
+#---------------------------------------------------------- Controles de Jugadores --------------------------------------------------
 #Creare Label y TextBox para CoordenadasX del J1
 columnaJ1=""
 lcolumnasJ1 = Label(ventana1, text="PosX: ")
@@ -149,11 +199,6 @@ btnJ1 = Button(ventana1, text="Jugar J1", command=pintarJ1)
 btnJ1.grid(row=0 , column=6)
 btnJ1.config(bg="#34495E", fg="white", borderwidth=1)
 
-#Aqui creare un Frame para Mostrar una Imagen Aleatoria de las piezas
-pieza = Frame(ventana1)
-pieza.config(bg = "#ADB3BD")
-pieza.place(relx=0.778, rely=0.13, relwidth= 0.2, relheight= 0.2)
-
 #Creare Label y TextBox para CoordenadasX del J2
 columnaJ2=""
 lcolumnasJ2 = Label(ventana1, text="PosX: ")
@@ -187,6 +232,16 @@ txtColorJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwi
 #Se Crea el Boton para que el J2 pueda Jugar
 btnJ2 = Button(ventana1, text="Jugar J2", command=pintarJ1)
 btnJ2.grid(row=0 , column=9)
-btnJ2.config(bg="#34495E", fg="white", borderwidth=1)
+btnJ2.config(bg="#34495E", fg="white", borderwidth=1) 
+
+#------------------------ piezas Aleatoreas como se Mostraran -----------------------------------------------------
+#Aqui creare un Frame para Mostrar una Imagen Aleatoria de las piezas
+pieza = Frame(ventana1)
+pieza.config(bg = "#ADB3BD")
+pieza.place(relx=0.778, rely=0.13, relwidth= 0.2, relheight= 0.2)
+
+limgPieza = Label(pieza)
+limgPieza.config(bg="#34495E",borderwidth=1, image=pathImg)
+limgPieza.place(relx=0.003, rely=0.003, relwidth=0.99, relheight=0.99)
 
 ventana1.mainloop()
