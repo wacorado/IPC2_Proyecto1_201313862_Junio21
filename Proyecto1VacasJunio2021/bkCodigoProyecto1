@@ -1,0 +1,72 @@
+def pintarJ1():
+    print("Si entro al metodo de pintarJ1")
+    global valorX, valorY, colorJ1, randomPiezaJ1
+    #randomPiezaJ1=1
+    colorBtnJ1=""
+    tamañoMatriz = len(matrizBotones)
+    posX=(int(txtColumnasJ1.get())-1)
+    posY=(int(txtFilasJ1.get())-1)
+    colorJ1=txtColorJ1.get()
+    if (tamañoMatriz <= 0):
+        MessageBox.showinfo("Error Tablero", "Tablero no ha sido creado no se puede jugar")
+    else:
+        print("------------------------------- Entro al Metodo Principal para Pintar Botones ------------------------------")
+        if(colorJ1.upper() == "ROJO"):
+            colorBtnJ1 = "#B90000"
+        elif(colorJ1.upper() == "AZUL"):
+            colorBtnJ1 = "#00024C"
+        elif(colorJ1.upper() == "AMARILLO"):
+            colorBtnJ1 = "#FFB900"
+        elif(colorJ1.upper() == "VERDE"):
+            colorBtnJ1 = "#005F20"
+        else:
+            MessageBox.showinfo("Error Color J1", "Color No Disponible para el Juego")
+        if (randomPiezaJ1==1):
+        #Primer Verificare si es factible utilizar todas las casillas del tablero para luego mandar a pintar las casillas:
+        #valido Pos en Y de la Pieza1
+            banderaValidadoraPieza = False
+            for i in range(3):
+                if (infBtnlista[posX][posY+i][2]==False):
+                    banderaValidadoraPieza=True
+                    MessageBox.showinfo("Error Casilla", "Casilla ("+str(posX)+","+str(posY+i)+") No Valida ya fue Ocupada")
+                if(i==3):
+                    if(infBtnlista[posX+1][posY+i][2]==False):
+                        banderaValidadoraPieza = True
+                        MessageBox.showinfo("Error Casilla", "Casilla ("+str(posX+1)+","+str(posY+i)+") No Valida ya fue Ocupada")
+        
+            if(banderaValidadoraPieza==False):
+                for i in range(3):
+                    if (infBtnlista[posX][posY+i][2] == False):
+                        print(infBtnlista[posX][posY+i])
+                        if(infBtnlista[posX][posY+i][2] == True):
+                            infBtnlista[posX][posY+i][2] = False
+                            infBtnlista[posX][posY+i][3] = colorJ1
+                            print("-----------------------------------")
+                            print(infBtnlista[posX][posY+i])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX][posY+i].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1), int(posY+1+i), colorJ1)
+                            matriz.generarGrafo()
+                            #tablero.refresh()
+                        else:
+                            MessageBox.showinfo("Error Casilla", "Casilla No Valida ya fue Ocupada")
+                        if(i == 3):
+                            if(infBtnlista[posX+1][posY+i][2] == False):
+                                print(infBtnlista[posX][posY])
+                                if(infBtnlista[posX][posY][2] == True):
+                                    infBtnlista[posX][posY][2] = False
+                                    infBtnlista[posX][posY][3] = colorJ1
+                                    print("-----------------------------------")
+                                    print(infBtnlista[posX][posY])
+                                    print("-----------------------------------")
+                                    print()
+                                    matrizBotones[posX][posY].config(
+                                    bg=colorBtnJ1, borderwidth=2, relief="solid")
+                                    matriz.insertarElemento(int(posX+1), int(posY+1), colorJ1)
+                                    matriz.generarGrafo()
+                                    #tablero.refresh()
+                                else:
+                                    MessageBox.showinfo("Error Casilla", "Casilla No Valida ya fue Ocupada")    
+    pruebaPieza1()
+    #randomPiezaJ1Img()

@@ -11,6 +11,7 @@ infBtnlista=[]
 valorY=""
 valorX=""
 colorJ1=""
+colorJ2=""
 randomPiezaJ1=0
 pathImg=""
 piezaJ1=0
@@ -55,6 +56,15 @@ def randomPiezaJ1Img():
         limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
         limgPieza.refresh()
 
+def pruebaPieza6():
+    global randomPiezaJ1,piezaJ1
+    randomPiezaJ1=6
+    if(randomPiezaJ1==6):
+        piezaJ1=randomPiezaJ1
+        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza6.gif")
+        imgPequeña=pathImg.subsample(2)
+        limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
+        limgPieza.refresh()
 
 #Metodos para botones y programas 
 def capDimensiones():
@@ -81,16 +91,18 @@ def capDimensiones():
         print(infBtnlista[y])
         print("-------------")
     print("Tamaño Matriz: "+str(len(matrizBotones)))
+    #pruebaPieza6()
     randomPiezaJ1Img()
     
 
 def pintarJ1():
-    global valorX, valorY, colorJ1
+    global valorX, valorY, colorJ1, randomPiezaJ1
     colorBtnJ1=""
     tamañoMatriz = len(matrizBotones)
     posX=(int(txtColumnasJ1.get())-1)
     posY=(int(txtFilasJ1.get())-1)
     colorJ1=txtColorJ1.get()
+    flagValidPieza=True
     
     if (tamañoMatriz <= 0):
         MessageBox.showinfo("Error Tablero","Tablero no ha sido creado no se puede jugar")
@@ -105,29 +117,491 @@ def pintarJ1():
             colorBtnJ1="#005F20"
         else:
             MessageBox.showinfo("Error Color J1","Color No Disponible para el Juego") 
-        print(infBtnlista[posX][posY])
-        if(infBtnlista[posX][posY][2] == True):
-            infBtnlista[posX][posY][2] = False
-            infBtnlista[posX][posY][3] = colorJ1
-            print("-----------------------------------")
-            print(infBtnlista[posX][posY])
-            print("-----------------------------------")
-            print()
-            matrizBotones[posX][posY].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
-            matriz.insertarElemento(int(posX+1),int(posY+1),colorJ1)
-            matriz.generarGrafo()
-        else:
-            MessageBox.showinfo("Error Casilla","Casilla No Valida ya fue Ocupada")
-    randomPiezaJ1Img() 
+        
+        # ------------------------------- Vamos a Validad y Crear la Pieza1 ----------------------------------
+        if(randomPiezaJ1==1):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX][posY+i][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                    flagValidPieza=False
+                    if(i==3):
+                        if(infBtnlista[posX+1][posY+i][2] == False):
+                            MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                            flagValidPieza=False
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX][posY+i][2] == True):
+                        infBtnlista[posX][posY+i][2] = False
+                        infBtnlista[posX][posY+i][3] = colorJ1
+                        print("-----------------------------------")
+                        print(infBtnlista[posX][posY+i])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX][posY+i].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1),int(posY+1+i),colorJ1)
+                        matriz.generarGrafo()
+                        if(i==3):
+                            if(infBtnlista[posX+1][posY+i][2] == True):
+                                infBtnlista[posX+1][posY+i][2] = False
+                                infBtnlista[posX+1][posY+i][3] = colorJ1
+                                print("-----------------------------------")
+                                print(infBtnlista[posX+1][posY+i])
+                                print("-----------------------------------")
+                                print()
+                                matrizBotones[posX+1][posY+i].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                                matriz.insertarElemento(int(posX+1+1),int(posY+1+i),colorJ1)
+                                matriz.generarGrafo()
+        
+        if(randomPiezaJ1==2):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX][posY+i][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                    flagValidPieza=False
+                    if(i==3):
+                        if(infBtnlista[posX-1][posY+i][2] == False):
+                            MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                            flagValidPieza=False
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX][posY+i][2] == True):
+                        infBtnlista[posX][posY+i][2] = False
+                        infBtnlista[posX][posY+i][3] = colorJ1
+                        print("-----------------------------------")
+                        print(infBtnlista[posX][posY+i])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX][posY+i].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1),int(posY+1+i),colorJ1)
+                        matriz.generarGrafo()
+                        if(i==3):
+                            if(infBtnlista[posX-1][posY+i][2] == True):
+                                infBtnlista[posX-1][posY+i][2] = False
+                                infBtnlista[posX-1][posY+i][3] = colorJ1
+                                print("-----------------------------------")
+                                print(infBtnlista[posX-1][posY+i])
+                                print("-----------------------------------")
+                                print()
+                                matrizBotones[posX-1][posY+i].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                                matriz.insertarElemento(int(posX+1-1),int(posY+1+i),colorJ1)
+                                matriz.generarGrafo()       
+        
+        if(randomPiezaJ1==3):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX+i][posY][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                    flagValidPieza=False
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX+i][posY][2] == True):
+                        infBtnlista[posX+i][posY][2] = False
+                        infBtnlista[posX+i][posY][3] = colorJ1
+                        print("-----------------------------------")
+                        print(infBtnlista[posX+i][posY])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX+i][posY].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1+i),int(posY+1),colorJ1)
+                        matriz.generarGrafo()
+        
+        if(randomPiezaJ1==4):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(i==0):
+                    if(infBtnlista[posX][posY][2]==False):
+                        MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                        flagValidPieza=False 
+                elif(i==1):
+                    if(infBtnlista[posX+1][posY][2]==False):
+                        MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                        flagValidPieza=False
+                elif(i==2):
+                    if(infBtnlista[posX][posY+1][2]==False):
+                        MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                        flagValidPieza=False 
+                elif(i==3):
+                    if(infBtnlista[posX+1][posY+1][2]==False):
+                        MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                        flagValidPieza=False 
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(i==0):
+                        if(infBtnlista[posX][posY][2]==True):
+                            infBtnlista[posX][posY][2] = False
+                            infBtnlista[posX][posY][3] = colorJ1
+                            print("-----------------------------------")
+                            print(infBtnlista[posX][posY])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX][posY].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1),int(posY+1),colorJ1)
+                            matriz.generarGrafo() 
+                    elif(i==1):
+                        if(infBtnlista[posX+1][posY][2]==True):
+                            infBtnlista[posX+1][posY][2] = False
+                            infBtnlista[posX+1][posY][3] = colorJ1
+                            print("-----------------------------------")
+                            print(infBtnlista[posX+1][posY])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX+1][posY].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1+1),int(posY+1),colorJ1)
+                            matriz.generarGrafo() 
+                    elif(i==2):
+                        if(infBtnlista[posX][posY+1][2]==True):
+                            infBtnlista[posX][posY+1][2] = False
+                            infBtnlista[posX][posY+1][3] = colorJ1
+                            print("-----------------------------------")
+                            print(infBtnlista[posX][posY+1])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX][posY+1].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1),int(posY+1+1),colorJ1)
+                            matriz.generarGrafo() 
+                    elif(i==3):
+                        if(infBtnlista[posX+1][posY+1][2]==True):
+                            infBtnlista[posX+1][posY+1][2] = False
+                            infBtnlista[posX+1][posY+1][3] = colorJ1
+                            print("-----------------------------------")
+                            print(infBtnlista[posX+1][posY+1])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX+1][posY+1].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1+1),int(posY+1+1),colorJ1)
+                            matriz.generarGrafo() 
 
-    #for y in range(int(valorY)):
-        #infBtnlista.append([])
-        #for x in range(int(valorX)):
-            #infBtnlista[y].append([x,y,True,"SinColor"])
-        #print("------------")
-        #print(infBtnlista[y])
-        #print("-------------")
-    #print("Tamaño Matriz: "+str(len(matrizBotones)))
+        if(randomPiezaJ1==5):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX+i][posY][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                    flagValidPieza=False
+                    if(i==1):
+                        if(infBtnlista[posX+i][posY-1][2] == False):
+                            MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY-1)+") No Valida")
+                            flagValidPieza=False
+                    if(i==2):
+                        if(infBtnlista[posX+i][posY-1][2] == False):
+                            MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY-1)+") No Valida")
+                            flagValidPieza=False
+                        
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX+i][posY][2] == True):
+                        infBtnlista[posX+i][posY][2] = False
+                        infBtnlista[posX+i][posY][3] = colorJ1
+                        print("-----------------------------------")
+                        print(infBtnlista[posX+i][posY])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX+i][posY].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1+i),int(posY+1),colorJ1)
+                        matriz.generarGrafo()
+                        if(i==1):
+                            if(infBtnlista[posX+i][posY-1][2] == True):
+                                infBtnlista[posX+i][posY-1][2] = False
+                                infBtnlista[posX+i][posY-1][3] = colorJ1
+                                print("-----------------------------------")
+                                print(infBtnlista[posX+i][posY-1])
+                                print("-----------------------------------")
+                                print()
+                                matrizBotones[posX+i][posY-1].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                                matriz.insertarElemento(int(posX+1+i),int(posY+1-1),colorJ1)
+                                matriz.generarGrafo()
+                        if(i==2):
+                            if(infBtnlista[posX+i][posY-1][2] == True):
+                                infBtnlista[posX+i][posY-1][2] = False
+                                infBtnlista[posX+i][posY-1][3] = colorJ1
+                                print("-----------------------------------")
+                                print(infBtnlista[posX+i][posY-1])
+                                print("-----------------------------------")
+                                print()
+                                matrizBotones[posX+i][posY-1].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                                matriz.insertarElemento(int(posX+1+i),int(posY+1-1),colorJ1)
+                                matriz.generarGrafo()
+    
+        if(randomPiezaJ1==6):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX][posY+i][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                    flagValidPieza=False
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX][posY+i][2] == True):
+                        infBtnlista[posX][posY+i][2] = False
+                        infBtnlista[posX][posY+i][3] = colorJ1
+                        print("-----------------------------------")
+                        print(infBtnlista[posX][posY+i])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX][posY+i].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1),int(posY+1+i),colorJ1)
+                        matriz.generarGrafo()
+    randomPiezaJ1Img()
+    #pruebaPieza6()
+
+def pintarJ2():
+    global valorX, valorY, colorJ2, randomPiezaJ1
+    colorBtnJ2=""
+    tamañoMatriz = len(matrizBotones)
+    posX=(int(txtColumnasJ2.get())-1)
+    posY=(int(txtFilasJ2.get())-1)
+    colorJ2=txtColorJ2.get()
+    flagValidPieza=True
+    
+    if (tamañoMatriz <= 0):
+        MessageBox.showinfo("Error Tablero","Tablero no ha sido creado no se puede jugar")
+    else:
+        if(colorJ2.upper()=="ROJO"):
+            colorBtnJ2="#B90000"
+        elif(colorJ2.upper()=="AZUL"):
+            colorBtnJ2="#00024C"
+        elif(colorJ2.upper()=="AMARILLO"):
+            colorBtnJ2="#FFB900"
+        elif(colorJ2.upper()=="VERDE"):
+            colorBtnJ2="#005F20"
+        else:
+            MessageBox.showinfo("Error Color J2","Color No Disponible para el Juego") 
+        
+        # ------------------------------- Vamos a Validad y Crear la Pieza1 ----------------------------------
+        if(randomPiezaJ1==1):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX][posY+i][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                    flagValidPieza=False
+                    if(i==3):
+                        if(infBtnlista[posX+1][posY+i][2] == False):
+                            MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                            flagValidPieza=False
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX][posY+i][2] == True):
+                        infBtnlista[posX][posY+i][2] = False
+                        infBtnlista[posX][posY+i][3] = colorJ2
+                        print("-----------------------------------")
+                        print(infBtnlista[posX][posY+i])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX][posY+i].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1),int(posY+1+i),colorJ2)
+                        matriz.generarGrafo()
+                        if(i==3):
+                            if(infBtnlista[posX+1][posY+i][2] == True):
+                                infBtnlista[posX+1][posY+i][2] = False
+                                infBtnlista[posX+1][posY+i][3] = colorJ2
+                                print("-----------------------------------")
+                                print(infBtnlista[posX+1][posY+i])
+                                print("-----------------------------------")
+                                print()
+                                matrizBotones[posX+1][posY+i].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                                matriz.insertarElemento(int(posX+1+1),int(posY+1+i),colorJ2)
+                                matriz.generarGrafo()
+        
+        if(randomPiezaJ1==2):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX][posY+i][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                    flagValidPieza=False
+                    if(i==3):
+                        if(infBtnlista[posX-1][posY+i][2] == False):
+                            MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                            flagValidPieza=False
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX][posY+i][2] == True):
+                        infBtnlista[posX][posY+i][2] = False
+                        infBtnlista[posX][posY+i][3] = colorJ2
+                        print("-----------------------------------")
+                        print(infBtnlista[posX][posY+i])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX][posY+i].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1),int(posY+1+i),colorJ2)
+                        matriz.generarGrafo()
+                        if(i==3):
+                            if(infBtnlista[posX-1][posY+i][2] == True):
+                                infBtnlista[posX-1][posY+i][2] = False
+                                infBtnlista[posX-1][posY+i][3] = colorJ2
+                                print("-----------------------------------")
+                                print(infBtnlista[posX-1][posY+i])
+                                print("-----------------------------------")
+                                print()
+                                matrizBotones[posX-1][posY+i].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                                matriz.insertarElemento(int(posX+1-1),int(posY+1+i),colorJ2)
+                                matriz.generarGrafo()       
+        
+        if(randomPiezaJ1==3):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX+i][posY][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                    flagValidPieza=False
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX+i][posY][2] == True):
+                        infBtnlista[posX+i][posY][2] = False
+                        infBtnlista[posX+i][posY][3] = colorJ2
+                        print("-----------------------------------")
+                        print(infBtnlista[posX+i][posY])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX+i][posY].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1+i),int(posY+1),colorJ2)
+                        matriz.generarGrafo()
+        
+        if(randomPiezaJ1==4):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(i==0):
+                    if(infBtnlista[posX][posY][2]==False):
+                        MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                        flagValidPieza=False 
+                elif(i==1):
+                    if(infBtnlista[posX+1][posY][2]==False):
+                        MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                        flagValidPieza=False
+                elif(i==2):
+                    if(infBtnlista[posX][posY+1][2]==False):
+                        MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                        flagValidPieza=False 
+                elif(i==3):
+                    if(infBtnlista[posX+1][posY+1][2]==False):
+                        MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                        flagValidPieza=False 
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(i==0):
+                        if(infBtnlista[posX][posY][2]==True):
+                            infBtnlista[posX][posY][2] = False
+                            infBtnlista[posX][posY][3] = colorJ2
+                            print("-----------------------------------")
+                            print(infBtnlista[posX][posY])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX][posY].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1),int(posY+1),colorJ2)
+                            matriz.generarGrafo() 
+                    elif(i==1):
+                        if(infBtnlista[posX+1][posY][2]==True):
+                            infBtnlista[posX+1][posY][2] = False
+                            infBtnlista[posX+1][posY][3] = colorJ2
+                            print("-----------------------------------")
+                            print(infBtnlista[posX+1][posY])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX+1][posY].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1+1),int(posY+1),colorJ2)
+                            matriz.generarGrafo() 
+                    elif(i==2):
+                        if(infBtnlista[posX][posY+1][2]==True):
+                            infBtnlista[posX][posY+1][2] = False
+                            infBtnlista[posX][posY+1][3] = colorJ2
+                            print("-----------------------------------")
+                            print(infBtnlista[posX][posY+1])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX][posY+1].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1),int(posY+1+1),colorJ2)
+                            matriz.generarGrafo() 
+                    elif(i==3):
+                        if(infBtnlista[posX+1][posY+1][2]==True):
+                            infBtnlista[posX+1][posY+1][2] = False
+                            infBtnlista[posX+1][posY+1][3] = colorJ2
+                            print("-----------------------------------")
+                            print(infBtnlista[posX+1][posY+1])
+                            print("-----------------------------------")
+                            print()
+                            matrizBotones[posX+1][posY+1].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                            matriz.insertarElemento(int(posX+1+1),int(posY+1+1),colorJ2)
+                            matriz.generarGrafo() 
+
+        if(randomPiezaJ1==5):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX+i][posY][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY)+") No Valida")
+                    flagValidPieza=False
+                    if(i==1):
+                        if(infBtnlista[posX+i][posY-1][2] == False):
+                            MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY-1)+") No Valida")
+                            flagValidPieza=False
+                    if(i==2):
+                        if(infBtnlista[posX+i][posY-1][2] == False):
+                            MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX+i)+","+str(posY-1)+") No Valida")
+                            flagValidPieza=False
+                        
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX+i][posY][2] == True):
+                        infBtnlista[posX+i][posY][2] = False
+                        infBtnlista[posX+i][posY][3] = colorJ2
+                        print("-----------------------------------")
+                        print(infBtnlista[posX+i][posY])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX+i][posY].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1+i),int(posY+1),colorJ2)
+                        matriz.generarGrafo()
+                        if(i==1):
+                            if(infBtnlista[posX+i][posY-1][2] == True):
+                                infBtnlista[posX+i][posY-1][2] = False
+                                infBtnlista[posX+i][posY-1][3] = colorJ2
+                                print("-----------------------------------")
+                                print(infBtnlista[posX+i][posY-1])
+                                print("-----------------------------------")
+                                print()
+                                matrizBotones[posX+i][posY-1].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                                matriz.insertarElemento(int(posX+1+i),int(posY+1-1),colorJ2)
+                                matriz.generarGrafo()
+                        if(i==2):
+                            if(infBtnlista[posX+i][posY-1][2] == True):
+                                infBtnlista[posX+i][posY-1][2] = False
+                                infBtnlista[posX+i][posY-1][3] = colorJ2
+                                print("-----------------------------------")
+                                print(infBtnlista[posX+i][posY-1])
+                                print("-----------------------------------")
+                                print()
+                                matrizBotones[posX+i][posY-1].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                                matriz.insertarElemento(int(posX+1+i),int(posY+1-1),colorJ2)
+                                matriz.generarGrafo()
+    
+        if(randomPiezaJ1==6):
+            # Validare Mediante el Crecimiento en Y las piezas en Y
+            for i in range(4):
+                if(infBtnlista[posX][posY+i][2] == False):
+                    MessageBox.showinfo("Error Pieza","Casilla: ("+str(posX)+","+str(posY+i)+") No Valida")
+                    flagValidPieza=False
+            #Ya validado que se puede Poner la pieza Procedemos Insertar:
+            if(flagValidPieza==True):
+                for i in range(4):
+                    if(infBtnlista[posX][posY+i][2] == True):
+                        infBtnlista[posX][posY+i][2] = False
+                        infBtnlista[posX][posY+i][3] = colorJ2
+                        print("-----------------------------------")
+                        print(infBtnlista[posX][posY+i])
+                        print("-----------------------------------")
+                        print()
+                        matrizBotones[posX][posY+i].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
+                        matriz.insertarElemento(int(posX+1),int(posY+1+i),colorJ2)
+                        matriz.generarGrafo()
+    randomPiezaJ1Img()
+
 
 #Aqui va el Codigo de la Interfaz Grafica visualmente
 
@@ -230,7 +704,7 @@ txtColorJ2.grid(row=2, column=8)
 txtColorJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1)
 
 #Se Crea el Boton para que el J2 pueda Jugar
-btnJ2 = Button(ventana1, text="Jugar J2", command=pintarJ1)
+btnJ2 = Button(ventana1, text="Jugar J2", command=pintarJ2)
 btnJ2.grid(row=0 , column=9)
 btnJ2.config(bg="#34495E", fg="white", borderwidth=1) 
 
