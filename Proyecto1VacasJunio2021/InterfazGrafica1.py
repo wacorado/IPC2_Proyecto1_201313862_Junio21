@@ -15,6 +15,9 @@ colorJ2=""
 randomPiezaJ1=0
 pathImg=""
 piezaJ1=0
+noturno = 1
+nombrePartida =""
+lnturno = ""
 
 def randomPiezaJ1Img():
     global randomPiezaJ1,piezaJ1
@@ -55,6 +58,7 @@ def randomPiezaJ1Img():
         imgPequeña=pathImg.subsample(2)
         limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
         limgPieza.refresh()
+    lnturno.refresh()
 
 def pruebaPieza6():
     global randomPiezaJ1,piezaJ1
@@ -68,7 +72,7 @@ def pruebaPieza6():
 
 #Metodos para botones y programas 
 def capDimensiones():
-    global valorX, valorY
+    global valorX, valorY, noturno
     print("Tamaño Matriz: "+str(len(matrizBotones)))
     valorY=txtFilas.get()
     valorX=txtColumnas.get()
@@ -92,11 +96,11 @@ def capDimensiones():
         print("-------------")
     print("Tamaño Matriz: "+str(len(matrizBotones)))
     #pruebaPieza6()
+    habilitaUsr()
     randomPiezaJ1Img()
-    
 
 def pintarJ1():
-    global valorX, valorY, colorJ1, randomPiezaJ1
+    global valorX, valorY, colorJ1, randomPiezaJ1,noturno
     colorBtnJ1=""
     tamañoMatriz = len(matrizBotones)
     posX=(int(txtColumnasJ1.get())-1)
@@ -346,11 +350,14 @@ def pintarJ1():
                         matrizBotones[posX][posY+i].config(bg=colorBtnJ1, borderwidth=2, relief="solid")
                         matriz.insertarElemento(int(posX+1),int(posY+1+i),colorJ1)
                         matriz.generarGrafo()
+    txtColorJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=DISABLED)
+    noturno=2
+    turnero()
     randomPiezaJ1Img()
     #pruebaPieza6()
 
 def pintarJ2():
-    global valorX, valorY, colorJ2, randomPiezaJ1
+    global valorX, valorY, colorJ2, randomPiezaJ1, noturno
     colorBtnJ2=""
     tamañoMatriz = len(matrizBotones)
     posX=(int(txtColumnasJ2.get())-1)
@@ -600,9 +607,52 @@ def pintarJ2():
                         matrizBotones[posX][posY+i].config(bg=colorBtnJ2, borderwidth=2, relief="solid")
                         matriz.insertarElemento(int(posX+1),int(posY+1+i),colorJ2)
                         matriz.generarGrafo()
+    txtColorJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=DISABLED)
+    noturno=1
+    turnero()
     randomPiezaJ1Img()
 
+def inicioPartidametod():
+    global nombrePartida
+    nombrePartida=txtNomPartida.get()
+    #txtColorJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
+    #txtColorJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
+    txtColumnas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
+    txtFilas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
+    btnCrearMatriz.config(bg="#34495E", fg="white", borderwidth=1,state=NORMAL)
+    txtNomPartida.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state=DISABLED)
 
+def habilitaUsr():
+        # ---------------------- Desahbilito ---------------------------------------------------------------
+        txtColumnas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=DISABLED)
+        txtFilas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=DISABLED)
+        btnCrearMatriz.config(bg="#34495E", fg="white", borderwidth=1,state=DISABLED)
+        # -------------------------- Habilito ----------------------------------------------------------------
+        txtColorJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
+        txtColorJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
+        txtColumnasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
+        txtFilasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
+        txtColumnasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
+        txtFilasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
+        btnJ2.config(bg="#34495E", fg="white", borderwidth=1, state= NORMAL)
+        btnJ1.config(bg="#34495E", fg="white", borderwidth=1, state= NORMAL)
+
+def turnero():
+    global noturno
+    if(noturno==1):
+        txtColumnasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
+        txtFilasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
+        btnJ1.config(bg="#34495E", fg="white", borderwidth=1, state= NORMAL)
+        txtColumnasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
+        txtFilasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
+        btnJ2.config(bg="#34495E", fg="white", borderwidth=1, state= DISABLED)
+    elif(noturno == 2):
+        txtColumnasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
+        txtFilasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
+        btnJ1.config(bg="#34495E", fg="white", borderwidth=1, state= DISABLED)
+        txtColumnasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
+        txtFilasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
+        btnJ2.config(bg="#34495E", fg="white", borderwidth=1, state= NORMAL)
 #Aqui va el Codigo de la Interfaz Grafica visualmente
 
 #Para agregar nombre a la Venta usamos lo Siguiente:
@@ -623,15 +673,15 @@ columnas=""
 #Aqui creo el box para obtener el valor de cantidad de filas o coordenadas X
 txtColumnas = Entry(ventana1, width=4, textvariable=columnas)
 txtColumnas.grid(row=0, column=1)
-txtColumnas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1) 
+txtColumnas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED) 
 #Aqui creo el box para obtener el valor de cantidad de filas o coordenadas Y
 txtFilas = Entry(ventana1, width=4, textvariable=filas)
 txtFilas.grid(row=1, column=1) 
-txtFilas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1)
+txtFilas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
 #Creo Boton Para Capturar Filas y Columnas para el Tablero
 btnCrearMatriz = Button(ventana1, text="Crear Tablero", command = capDimensiones)
 btnCrearMatriz.grid(row=0 , column=2)
-btnCrearMatriz.config(bg="#34495E", fg="white", borderwidth=1)
+btnCrearMatriz.config(bg="#34495E", fg="white", borderwidth=1, state= DISABLED)
 
 # Frame para colocar el tablero dinamico de Botones:
 tablero = Frame(ventana1)
@@ -646,7 +696,7 @@ lcolumnasJ1.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
 
 txtColumnasJ1 = Entry(ventana1, width=4, textvariable=columnaJ1)
 txtColumnasJ1.grid(row=0, column=5)
-txtColumnasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1) 
+txtColumnasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED) 
 
 #Create Label y TextBox para CoordenadasY del J1
 filaJ1 = ""
@@ -656,7 +706,7 @@ lfilasJ1.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
 
 txtFilasJ1 = Entry(ventana1, width=4, textvariable=filaJ1)
 txtFilasJ1.grid(row=1, column=5)
-txtFilasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1)
+txtFilasJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
 
 #Create Label y TextBox para Color del J1
 colorJ1 = ""
@@ -666,12 +716,12 @@ lcolorJ1.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
 
 txtColorJ1 = Entry(ventana1, width=10, textvariable=colorJ1)
 txtColorJ1.grid(row=2, column=5)
-txtColorJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1)
+txtColorJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
 
 #Se Crea el Boton para que el J1 pueda Jugar
 btnJ1 = Button(ventana1, text="Jugar J1", command=pintarJ1)
 btnJ1.grid(row=0 , column=6)
-btnJ1.config(bg="#34495E", fg="white", borderwidth=1)
+btnJ1.config(bg="#34495E", fg="white", borderwidth=1, state= DISABLED)
 
 #Creare Label y TextBox para CoordenadasX del J2
 columnaJ2=""
@@ -681,7 +731,7 @@ lcolumnasJ2.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
 
 txtColumnasJ2 = Entry(ventana1, width=4, textvariable=columnaJ2)
 txtColumnasJ2.grid(row=0, column=8)
-txtColumnasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1) 
+txtColumnasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED) 
 
 #Create Label y TextBox para CoordenadasY del J2
 filaJ2 = ""
@@ -691,7 +741,7 @@ lfilasJ2.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
 
 txtFilasJ2 = Entry(ventana1, width=4, textvariable=filaJ2)
 txtFilasJ2.grid(row=1, column=8)
-txtFilasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1)
+txtFilasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
 
 #Create Label y TextBox para Color del J2
 colorJ2 = ""
@@ -701,12 +751,12 @@ lcolorJ2.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
 
 txtColorJ2 = Entry(ventana1, width=10, textvariable=colorJ1)
 txtColorJ2.grid(row=2, column=8)
-txtColorJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1)
+txtColorJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= DISABLED)
 
 #Se Crea el Boton para que el J2 pueda Jugar
 btnJ2 = Button(ventana1, text="Jugar J2", command=pintarJ2)
 btnJ2.grid(row=0 , column=9)
-btnJ2.config(bg="#34495E", fg="white", borderwidth=1) 
+btnJ2.config(bg="#34495E", fg="white", borderwidth=1, state= DISABLED) 
 
 #------------------------ piezas Aleatoreas como se Mostraran -----------------------------------------------------
 #Aqui creare un Frame para Mostrar una Imagen Aleatoria de las piezas
@@ -717,5 +767,37 @@ pieza.place(relx=0.778, rely=0.13, relwidth= 0.2, relheight= 0.2)
 limgPieza = Label(pieza)
 limgPieza.config(bg="#34495E",borderwidth=1, image=pathImg)
 limgPieza.place(relx=0.003, rely=0.003, relwidth=0.99, relheight=0.99)
+
+#---------------------- Label para Nombre de Partida, Boton Iniciar Juego, Boton Cargar Juego ------------------------
+#Create Label y TextBox para Nombre Partida
+nombrePartida= ""
+lnombrePartida = Label(ventana1, text="NombrePartida: ")
+lnombrePartida.grid(row = 0, column = 10)
+lnombrePartida.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
+
+txtNomPartida = Entry(ventana1, width=12, textvariable=nombrePartida)
+txtNomPartida.grid(row=0, column=11)
+txtNomPartida.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1)
+
+#Se Crea el Boton para que el Iniciar Partida y se  pueda Jugar
+inicioPartida = Button(ventana1, text="Jugar", command=inicioPartidametod)
+inicioPartida.place(relx=0.825, rely=0.365, relwidth= 0.1, relheight= 0.1)
+inicioPartida.config(bg="#34495E", fg="white", borderwidth=1) 
+
+#Se Crea el Boton para que el Cargar Partida y se  pueda Jugar
+cargarPartida = Button(ventana1, text="Cargar\n" "Partida", command=pintarJ2)
+cargarPartida.place(relx=0.825, rely=0.565, relwidth= 0.1, relheight= 0.1)
+cargarPartida.config(bg="#34495E", fg="white", borderwidth=1) 
+
+#---------------------- Label para Nombre de Partida, Boton Iniciar Juego, Boton Cargar Juego ------------------------
+#Create Label y TextBox para CoordenadasY del J2
+lturno = Label(ventana1, text="Turno: ")
+lturno.grid(row = 2, column = 10)
+lturno.config(bg="#34495E", fg="white", font=("Comic Sans MS", 24))
+
+
+lnturno = Label(ventana1, text=noturno)
+lnturno.grid(row = 2, column = 11)
+lnturno.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
 
 ventana1.mainloop()
