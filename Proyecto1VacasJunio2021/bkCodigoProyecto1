@@ -70,3 +70,36 @@ def pintarJ1():
                                     MessageBox.showinfo("Error Casilla", "Casilla No Valida ya fue Ocupada")    
     pruebaPieza1()
     #randomPiezaJ1Img()
+
+
+
+
+        #------- Aqui guardamos la info de la matriz en el XML -----
+    columnas=ET.SubElement(matriz,"Columnas")
+    columnas.text=valorX
+    filas=ET.SubElement(matriz,"Filas")
+    filas.text=valorY
+    imagen=ET.SubElement(matriz,"Imagen")
+
+
+    rPrincipal = ET.Element('Matrices')
+    matriz = ET.SubElement(rPrincipal,'Matriz')
+    nombrePartidaMatriz=ET.SubElement(matriz,"NOMBRE")
+    nombrePartidaMatriz.text=nombrePartida
+
+    def guardarPartida():
+    global imagen
+    for x in range(int(valorX)):
+        for y in range(int(valorY)):
+            if(infBtnlista[x][y][3]==colorJ1):
+                j1=ET.SubElement(imagen,"Jugador")
+                j1.text="1"
+            elif(infBtnlista[x][y][3]==colorJ2):
+                j2=ET.SubElement(imagen,"Jugador 2")
+                j2.text="2"
+                
+
+    xml = ET.tostring(rPrincipal)
+    archivo = open("Matrices.xml", 'wb')
+    archivo.write(xml)
+    archivo.close()

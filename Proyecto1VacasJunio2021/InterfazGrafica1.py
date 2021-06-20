@@ -2,6 +2,9 @@ from tkinter import *
 import random
 from tkinter import messagebox as MessageBox
 from matriz import MatrizDispersa
+from tkinter.filedialog import askopenfilename
+import xml.etree.ElementTree as ET
+
 
 matriz=MatrizDispersa()
 
@@ -18,9 +21,15 @@ piezaJ1=0
 noturno = 1
 nombrePartida =""
 lnturno = ""
+contadorPuntosJ1=0
+contadorPuntosJ2=0
+rPrincipal=None
+matriz=None
+nombrePartidaMatriz=None
+imagen = None
 
 def randomPiezaJ1Img():
-    global randomPiezaJ1,piezaJ1
+    global randomPiezaJ1,piezaJ1, lnturno
     randomPiezaJ1=random.randint(1,6)
     if(randomPiezaJ1==1):
         piezaJ1=randomPiezaJ1
@@ -100,7 +109,7 @@ def capDimensiones():
     randomPiezaJ1Img()
 
 def pintarJ1():
-    global valorX, valorY, colorJ1, randomPiezaJ1,noturno
+    global valorX, valorY, colorJ1, randomPiezaJ1,noturno,contadorPuntosJ1
     colorBtnJ1=""
     tamañoMatriz = len(matrizBotones)
     posX=(int(txtColumnasJ1.get())-1)
@@ -135,6 +144,7 @@ def pintarJ1():
                             flagValidPieza=False
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ1=contadorPuntosJ1+1
                 for i in range(4):
                     if(infBtnlista[posX][posY+i][2] == True):
                         infBtnlista[posX][posY+i][2] = False
@@ -170,6 +180,7 @@ def pintarJ1():
                             flagValidPieza=False
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ1=contadorPuntosJ1+1
                 for i in range(4):
                     if(infBtnlista[posX][posY+i][2] == True):
                         infBtnlista[posX][posY+i][2] = False
@@ -201,6 +212,7 @@ def pintarJ1():
                     flagValidPieza=False
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ1=contadorPuntosJ1+1
                 for i in range(4):
                     if(infBtnlista[posX+i][posY][2] == True):
                         infBtnlista[posX+i][posY][2] = False
@@ -234,6 +246,7 @@ def pintarJ1():
                         flagValidPieza=False 
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ1=contadorPuntosJ1+1
                 for i in range(4):
                     if(i==0):
                         if(infBtnlista[posX][posY][2]==True):
@@ -297,6 +310,7 @@ def pintarJ1():
                         
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ1=contadorPuntosJ1+1
                 for i in range(4):
                     if(infBtnlista[posX+i][posY][2] == True):
                         infBtnlista[posX+i][posY][2] = False
@@ -339,6 +353,7 @@ def pintarJ1():
                     flagValidPieza=False
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ1=contadorPuntosJ1+1
                 for i in range(4):
                     if(infBtnlista[posX][posY+i][2] == True):
                         infBtnlista[posX][posY+i][2] = False
@@ -357,7 +372,7 @@ def pintarJ1():
     #pruebaPieza6()
 
 def pintarJ2():
-    global valorX, valorY, colorJ2, randomPiezaJ1, noturno
+    global valorX, valorY, colorJ2, randomPiezaJ1, noturno, contadorPuntosJ2
     colorBtnJ2=""
     tamañoMatriz = len(matrizBotones)
     posX=(int(txtColumnasJ2.get())-1)
@@ -392,6 +407,7 @@ def pintarJ2():
                             flagValidPieza=False
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ2=contadorPuntosJ2+1
                 for i in range(4):
                     if(infBtnlista[posX][posY+i][2] == True):
                         infBtnlista[posX][posY+i][2] = False
@@ -427,6 +443,7 @@ def pintarJ2():
                             flagValidPieza=False
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ2=contadorPuntosJ2+1
                 for i in range(4):
                     if(infBtnlista[posX][posY+i][2] == True):
                         infBtnlista[posX][posY+i][2] = False
@@ -458,6 +475,7 @@ def pintarJ2():
                     flagValidPieza=False
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ2=contadorPuntosJ2+1
                 for i in range(4):
                     if(infBtnlista[posX+i][posY][2] == True):
                         infBtnlista[posX+i][posY][2] = False
@@ -491,6 +509,7 @@ def pintarJ2():
                         flagValidPieza=False 
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ2=contadorPuntosJ2+1
                 for i in range(4):
                     if(i==0):
                         if(infBtnlista[posX][posY][2]==True):
@@ -554,6 +573,7 @@ def pintarJ2():
                         
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ2=contadorPuntosJ2+1
                 for i in range(4):
                     if(infBtnlista[posX+i][posY][2] == True):
                         infBtnlista[posX+i][posY][2] = False
@@ -596,6 +616,7 @@ def pintarJ2():
                     flagValidPieza=False
             #Ya validado que se puede Poner la pieza Procedemos Insertar:
             if(flagValidPieza==True):
+                contadorPuntosJ2=contadorPuntosJ2+1
                 for i in range(4):
                     if(infBtnlista[posX][posY+i][2] == True):
                         infBtnlista[posX][posY+i][2] = False
@@ -613,7 +634,7 @@ def pintarJ2():
     randomPiezaJ1Img()
 
 def inicioPartidametod():
-    global nombrePartida
+    global nombrePartida, contadorPuntosJ1, contadorPuntosJ2
     nombrePartida=txtNomPartida.get()
     #txtColorJ1.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
     #txtColorJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
@@ -621,6 +642,8 @@ def inicioPartidametod():
     txtFilas.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1,state=NORMAL)
     btnCrearMatriz.config(bg="#34495E", fg="white", borderwidth=1,state=NORMAL)
     txtNomPartida.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state=DISABLED)
+    contadorPuntosJ1 = 0
+    contadorPuntosJ2 = 0
 
 def habilitaUsr():
         # ---------------------- Desahbilito ---------------------------------------------------------------
@@ -653,6 +676,52 @@ def turnero():
         txtColumnasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
         txtFilasJ2.config(bg="white", fg="#34495E", font=("Comic Sans MS", 16), borderwidth=1, state= NORMAL)
         btnJ2.config(bg="#34495E", fg="white", borderwidth=1, state= NORMAL)
+
+def defGanador():
+    global contadorPuntosJ2, contadorPuntosJ1
+
+    if(contadorPuntosJ1>contadorPuntosJ2):
+        MessageBox.showinfo("Ganador","El ganador es el Jugador 1")
+    elif(contadorPuntosJ2>contadorPuntosJ1):
+        MessageBox.showinfo("Ganador","El ganador es el Jugador 2")
+    elif(contadorPuntosJ1==contadorPuntosJ2):
+        MessageBox.showinfo("Empate","El juego esta empatado")
+    else:
+        MessageBox.showinfo("Error Definicion","No se puede determinar ganador")
+
+def cargarPartida():
+    archivo = askopenfilename()#Abre la interfaz para escoger el archivo a cargar
+    print(archivo)
+    #archivoLectura = open('' + archivo + '', 'r')
+
+def reporteWeb():
+        matriz.generarGrafo()
+    #--------------- se genera el HTML DEL recorrido: ----------------------------
+        file = open("ReporteJuego.html","w")
+        file.write("<!DOCTYPE HTML>\n")
+        file.write("<htm lang = \"es\">\n")
+        file.write("<head>\n")
+        file.write("<TITLE>REPORTE JUEGO BLOCKS</TITLE>\n")
+        file.write("<link href=\"C:/Users/wacorado/Desktop/Proyecto1VacasJunio2021/Style.css\" type=\"text/css\">\n")
+        file.write("</head>\n")
+        file.write("<body>\n")
+        file.write("<div id = \"titulo\">\n")
+        file.write("<h1>Reporte Grafico Matriz Dispersa</h1>\n")
+        file.write("</div>\n")
+        file.write("<div id= \"cuerpo\">\n")
+        file.write("<img src=\""+"grafo2.png"+"\">\n")
+        file.write("</div>\n")
+        file.write("<div>\n")
+        file.write("<p><h3>  Walther Andree Corado Paiz </h3></p>\n")
+        file.write("<p><h3>  Carnet: 201313861 </h3></p>\n")
+        file.write("<p><h3>  IPC2 Vacaciones Junio 2021 </h3></p>\n")
+        file.write("</div>\n")
+        file.write("</body>\n")
+        file.write("</htmlL>\n")
+        #os.startfile("index.html")
+        #os.open("index.html")
+        print("HTML GENERADO")
+
 #Aqui va el Codigo de la Interfaz Grafica visualmente
 
 #Para agregar nombre a la Venta usamos lo Siguiente:
@@ -785,9 +854,25 @@ inicioPartida.place(relx=0.825, rely=0.365, relwidth= 0.1, relheight= 0.1)
 inicioPartida.config(bg="#34495E", fg="white", borderwidth=1) 
 
 #Se Crea el Boton para que el Cargar Partida y se  pueda Jugar
-cargarPartida = Button(ventana1, text="Cargar\n" "Partida", command=pintarJ2)
-cargarPartida.place(relx=0.825, rely=0.565, relwidth= 0.1, relheight= 0.1)
+cargarPartida = Button(ventana1, text="Cargar\n" "Partida", command=cargarPartida)
+cargarPartida.place(relx=0.825, rely=0.485, relwidth= 0.1, relheight= 0.1)
 cargarPartida.config(bg="#34495E", fg="white", borderwidth=1) 
+
+#Se Crea el Boton para que el Calificar Partida y se  pueda Jugar
+calificarPartida = Button(ventana1, text="Calificar\n" "Partida", command=defGanador)
+calificarPartida.place(relx=0.825, rely=0.610, relwidth= 0.1, relheight= 0.1)
+calificarPartida.config(bg="#34495E", fg="white", borderwidth=1) 
+
+#Se Crea el Boton para que el Calificar Partida y se  pueda Jugar
+reporteJuego = Button(ventana1, text="Reporte\n" "Juego", command=reporteWeb)
+reporteJuego.place(relx=0.825, rely=0.738, relwidth= 0.1, relheight= 0.1)
+reporteJuego.config(bg="#34495E", fg="white", borderwidth=1)
+
+#Se Crea el Boton para que el Reporte Grafico de  Partida
+guardarJuego = Button(ventana1, text="Guardar\n" "Juego", command=pintarJ2)
+guardarJuego.place(relx=0.825, rely=0.858, relwidth= 0.1, relheight= 0.1)
+guardarJuego.config(bg="#34495E", fg="white", borderwidth=1) 
+
 
 #---------------------- Label para Nombre de Partida, Boton Iniciar Juego, Boton Cargar Juego ------------------------
 #Create Label y TextBox para CoordenadasY del J2
@@ -801,3 +886,4 @@ lnturno.grid(row = 2, column = 11)
 lnturno.config(bg="#34495E", fg="white", font=("Comic Sans MS", 16))
 
 ventana1.mainloop()
+
