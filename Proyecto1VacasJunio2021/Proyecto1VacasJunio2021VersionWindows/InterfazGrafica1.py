@@ -23,68 +23,52 @@ nombrePartida =""
 lnturno = ""
 contadorPuntosJ1=0
 contadorPuntosJ2=0
-#limgPieza = Label()
-
 
 def randomPiezaJ1Img():
-    global randomPiezaJ1,piezaJ1, lnturno,limgPieza
+    global randomPiezaJ1,piezaJ1,lnturno
     randomPiezaJ1=random.randint(1,6)
     if(randomPiezaJ1==1):
         piezaJ1=randomPiezaJ1
-        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza1.gif")
+        pathImg=PhotoImage(file="C:/Users/wacorado/Desktop/Proyecto1VacasJunio2021/Pieza1.gif")
         imgPequeña=pathImg.subsample(2)
-        #limgPieza.destroy()
-        #limgPieza = Label(pieza)
         limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
-        #limgPieza.place(relx=0.003, rely=0.003, relwidth=0.99, relheight=0.99)
         limgPieza.refresh()
+        lnturno.refresh()
     elif(randomPiezaJ1==2):
         piezaJ1=randomPiezaJ1
-        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza2.gif")
+        pathImg=PhotoImage(file="C:/Users/wacorado/Desktop/Proyecto1VacasJunio2021/Pieza2.gif")
         imgPequeña=pathImg.subsample(2)
-        #limgPieza.destroy()
-        #limgPieza = Label(pieza)
         limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
-        #limgPieza.place(relx=0.003, rely=0.003, relwidth=0.99, relheight=0.99)
         limgPieza.refresh()
+        lnturno.refresh()
     elif(randomPiezaJ1==3):
         piezaJ1=randomPiezaJ1
-        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza3.gif")
+        pathImg=PhotoImage(file="C:/Users/wacorado/Desktop/Proyecto1VacasJunio2021/Pieza3.gif")
         imgPequeña=pathImg.subsample(2)
-        #limgPieza.destroy()
-        #limgPieza = Label(pieza)
         limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
-        #limgPieza.place(relx=0.003, rely=0.003, relwidth=0.99, relheight=0.99)
         limgPieza.refresh()
+        lnturno.refresh()
     elif(randomPiezaJ1==4):
         piezaJ1=randomPiezaJ1
-        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza4.gif")
+        pathImg=PhotoImage(file="C:/Users/wacorado/Desktop/Proyecto1VacasJunio2021/Pieza4.gif")
         imgPequeña=pathImg.subsample(2)
-        #limgPieza.destroy()
-        #limgPieza = Label(pieza)
         limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
-        #limgPieza.place(relx=0.003, rely=0.003, relwidth=0.99, relheight=0.99)
         limgPieza.refresh()
+        lnturno.refresh()
     elif(randomPiezaJ1==5):
         piezaJ1=randomPiezaJ1
-        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza5.gif")
+        pathImg=PhotoImage(file="C:/Users/wacorado/Desktop/Proyecto1VacasJunio2021/Pieza5.gif")
         imgPequeña=pathImg.subsample(2)
-        #limgPieza.destroy()
-        #limgPieza = Label(pieza)
         limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
-        #limgPieza.place(relx=0.003, rely=0.003, relwidth=0.99, relheight=0.99)
         limgPieza.refresh()
+        lnturno.refresh()
     elif(randomPiezaJ1==6):
         piezaJ1=randomPiezaJ1
-        pathImg=PhotoImage(file="/Users/negrocorado/Desktop/Walther Corado/IPC2 2021/Vacas Junio/Proyecto1VacasJunio2021/Pieza6.gif")
+        pathImg=PhotoImage(file="C:/Users/wacorado/Desktop/Proyecto1VacasJunio2021/Pieza6.gif")
         imgPequeña=pathImg.subsample(2)
-        #limgPieza.destroy()
-        #limgPieza = Label(pieza)
         limgPieza.config(bg="#34495E",borderwidth=1, image=imgPequeña)
-        #limgPieza.place(relx=0.003, rely=0.003, relwidth=0.99, relheight=0.99)
         limgPieza.refresh()
-    #lnturno.refresh()
-
+        lnturno.refresh()
 
 
 #Metodos para botones y programas 
